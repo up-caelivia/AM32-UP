@@ -43,6 +43,26 @@
 // #define USE_ADC_INPUT
 // #define USE_ALKAS_DEBUG_LED
 
+#ifdef UP_ESC_12S100A_L431_CAN
+#define FIRMWARE_NAME "UP_12S100A"
+#define FILE_NAME "UP_ESC_12S100A_L431_CAN"
+#define DRONECAN_SUPPORT 1
+#define DRONECAN_NODE_NAME "com.up-caelivia.esc_12S100A"
+#define DEAD_TIME 80
+#define HARDWARE_GROUP_L4_C
+#define INPUT_PIN LL_GPIO_PIN_4
+#define INPUT_PIN_PORT GPIOB
+#define HARDWARE_GROUP_L4_045
+#define TARGET_VOLTAGE_DIVIDER 210 // 200k and 10k
+#define MILLIVOLT_PER_AMP 30 // I * 300uOhm * 100 V/V = 30mV per 1A
+#define RAMP_SPEED_LOW_RPM 1
+#define RAMP_SPEED_HIGH_RPM 1
+#define USE_SERIAL_TELEMETRY //PB6 as default
+#define USE_DRV8328_NFAULT
+#define NFAULT_PORT GPIOA
+#define NFAULT_PIN LL_GPIO_PIN_15
+#endif
+
 
 #ifdef LUMENIER_12S_F421
 #define FIRMWARE_NAME "Lumenier 12s"
@@ -4347,8 +4367,12 @@
 
 #define    MCU_L431
 #define    USE_TIMER_15_CHANNEL_1
-#define    INPUT_PIN               LL_GPIO_PIN_2
-#define    INPUT_PIN_PORT              GPIOA
+#ifndef INPUT_PIN
+  #define    INPUT_PIN               LL_GPIO_PIN_2
+#endif
+#ifndef INPUT_PIN_PORT
+  #define    INPUT_PIN_PORT              GPIOA
+#endif
 #define    IC_TIMER_CHANNEL         LL_TIM_CHANNEL_CH1
 #define    IC_TIMER_REGISTER          TIM15
 #define    IC_TIMER_POINTER           htim15
